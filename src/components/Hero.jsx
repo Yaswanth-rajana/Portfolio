@@ -130,7 +130,7 @@ const Hero = () => {
             <div className="visual-container">
               <div className="tilted-card-container">
                 <TiltedCard
-                  imageSrc="photo_2025-08-05 19.16.27 (1).jpeg"
+                  imageSrc="Image.png"
                   altText="Yaswanth Rajana"
                   captionText=""
                   containerHeight="300px"
