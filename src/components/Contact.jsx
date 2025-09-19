@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, memo, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import './Contact.scss'
-import ScrollFloat from './ScrollFloat';
+import ScrollFloat from './ScrollFloat'
 
-const Contact = () => {
+const Contact = memo(() => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,13 +15,13 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null)
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -29,9 +29,9 @@ const Contact = () => {
         [name]: ''
       }))
     }
-  }
+  }, [errors])
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {}
 
     if (!formData.name.trim()) {
@@ -55,23 +55,23 @@ const Contact = () => {
     }
 
     return newErrors
-  }
+  }, [formData])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault()
     const validationErrors = validateForm()
-    
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
     }
 
     setIsSubmitting(true)
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
-      
+
       setSubmitStatus('success')
       setFormData({ name: '', email: '', phone: '', message: '' })
     } catch (error) {
@@ -79,7 +79,7 @@ const Contact = () => {
     } finally {
       setIsSubmitting(false)
     }
-  }
+  }, [validateForm])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -109,6 +109,7 @@ const Contact = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ willChange: 'transform' }}
         >
           <ScrollFloat
             animationDuration={1}
@@ -124,30 +125,30 @@ const Contact = () => {
           </ScrollFloat>
 
           <div className="contact-grid">
-            <motion.div className="contact-info" variants={itemVariants} >
+            <motion.div className="contact-info" variants={itemVariants} style={{ willChange: 'transform' }}>
               <h3>Get in Touch</h3>
               <p>
-                I'm always interested in new opportunities and exciting projects. 
+                I'm always interested in new opportunities and exciting projects.
                 Feel free to reach out if you'd like to work together!
               </p>
 
               <div className="contact-details">
                 <div className="contact-item">
-                  <FaPhone />
+                  <FaPhone aria-hidden="true" />
                   <span>+91 8919171136</span>
                 </div>
                 <div className="contact-item">
-                  <FaEnvelope />
+                  <FaEnvelope aria-hidden="true" />
                   <span>yaswanthrajanaindiann@gmail.com</span>
                 </div>
                 <div className="contact-item">
-                  <FaMapMarkerAlt />
+                  <FaMapMarkerAlt aria-hidden="true" />
                   <span>Rajahmundry, India</span>
                 </div>
               </div>
             </motion.div>
 
-            <motion.div className="contact-form-container" variants={itemVariants}>
+            <motion.div className="contact-form-container" variants={itemVariants} style={{ willChange: 'transform' }}>
               <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
@@ -157,8 +158,9 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className={errors.name ? 'error' : ''}
+                    aria-describedby={errors.name ? "name-error" : undefined}
                   />
-                  {errors.name && <span className="error-message">{errors.name}</span>}
+                  {errors.name && <span id="name-error" className="error-message">{errors.name}</span>}
                 </div>
 
                 <div className="form-group">
@@ -169,8 +171,9 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className={errors.email ? 'error' : ''}
+                    aria-describedby={errors.email ? "email-error" : undefined}
                   />
-                  {errors.email && <span className="error-message">{errors.email}</span>}
+                  {errors.email && <span id="email-error" className="error-message">{errors.email}</span>}
                 </div>
 
                 <div className="form-group">
@@ -181,8 +184,9 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className={errors.phone ? 'error' : ''}
+                    aria-describedby={errors.phone ? "phone-error" : undefined}
                   />
-                  {errors.phone && <span className="error-message">{errors.phone}</span>}
+                  {errors.phone && <span id="phone-error" className="error-message">{errors.phone}</span>}
                 </div>
 
                 <div className="form-group">
@@ -193,8 +197,9 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     className={errors.message ? 'error' : ''}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                   />
-                  {errors.message && <span className="error-message">{errors.message}</span>}
+                  {errors.message && <span id="message-error" className="error-message">{errors.message}</span>}
                 </div>
 
                 <motion.button
@@ -203,6 +208,7 @@ const Contact = () => {
                   disabled={isSubmitting}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  style={{ willChange: 'transform' }}
                 >
                   {isSubmitting ? 'Sending...' : 'Share message'}
                 </motion.button>
@@ -212,6 +218,7 @@ const Contact = () => {
                     className="success-message"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
+                    style={{ willChange: 'transform' }}
                   >
                     Thank you! Your message has been sent successfully.
                   </motion.div>
@@ -222,6 +229,7 @@ const Contact = () => {
                     className="error-message"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
+                    style={{ willChange: 'transform' }}
                   >
                     Sorry, there was an error sending your message. Please try again.
                   </motion.div>
@@ -233,6 +241,8 @@ const Contact = () => {
       </div>
     </section>
   )
-}
+})
+
+Contact.displayName = 'Contact'
 
 export default Contact

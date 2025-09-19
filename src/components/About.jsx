@@ -1,11 +1,12 @@
 // About.jsx
+import { memo } from "react";
 import { motion } from "framer-motion";
 import "./About.scss";
 import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import TextReveal from './TextReveal';
 import ScrollFloat from './ScrollFloat';
 
-const About = () => {
+const About = memo(() => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -34,6 +35,7 @@ const About = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
+          style={{ willChange: 'transform' }}
         >
           <ScrollFloat
             animationDuration={1}
@@ -66,7 +68,7 @@ const About = () => {
               </p>
             </TextReveal>
           </div>
-          
+
           {/* Added Skills Heading */}
           <ScrollFloat
             animationDuration={1}
@@ -80,8 +82,8 @@ const About = () => {
           >
             Skills
           </ScrollFloat>
-          
-          <motion.div variants={itemVariants} className="scrollstack-container">
+
+          <motion.div variants={itemVariants} className="scrollstack-container" style={{ willChange: 'transform' }}>
             <ScrollStack useWindowScroll={false}>
               <ScrollStackItem style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", color: "white" }}>
                 <h3>Frontend Development</h3>
@@ -101,6 +103,8 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
+
+About.displayName = 'About';
 
 export default About;

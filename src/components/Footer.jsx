@@ -1,9 +1,10 @@
+import { memo, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaTwitter, FaHeart } from 'react-icons/fa'
 import './Footer.scss'
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear()
+const Footer = memo(() => {
+  const currentYear = useMemo(() => new Date().getFullYear(), [])
 
   return (
     <footer className="footer">
@@ -14,6 +15,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          style={{ willChange: 'transform' }}
         >
           <div className="footer-main">
             <div className="footer-info">
@@ -28,28 +30,30 @@ const Footer = () => {
             <div className="footer-links">
               <div className="link-group">
                 <h4>Navigation</h4>
-                <ul>
-                  <li><a href="#home">Home</a></li>
-                  <li><a href="#about">About</a></li>
-                  <li><a href="#works">Works</a></li>
-                  <li><a href="#contact">Contact</a></li>
-                </ul>
+                <nav>
+                  <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#works">Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                  </ul>
+                </nav>
               </div>
 
-              <div className="link-group">
+              {/* <div className="link-group">
                 <h4>Social</h4>
                 <div className="social-links">
-                  {/* <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                    <FaGithub />
+                  <a href="https://github.com/Yaswanth-rajana" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <FaGithub aria-hidden="true" />
                   </a>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <FaLinkedin />
+                  <a href="https://www.linkedin.com/in/yaswanth-rajana-591a3828a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                    <FaLinkedin aria-hidden="true" />
                   </a>
-                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                    <FaTwitter /> */}
-                  {/* </a> */}
-                </div>
-              </div>
+                  <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile">
+                    <FaTwitter aria-hidden="true" />
+                  </a>
+                </div> */}
+              {/* </div> */}
             </div>
           </div>
 
@@ -65,6 +69,8 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
+
+Footer.displayName = 'Footer'
 
 export default Footer
