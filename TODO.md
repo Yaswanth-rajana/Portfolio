@@ -1,12 +1,6 @@
-# TODO: Implement ScrollFloat for Section Titles
+# TODO: Replace Loading Percentage with Flight Takeoff Animation
 
-## Tasks
-- [ ] Edit src/components/About.jsx: Import ScrollFloat and wrap "About Me" and "Skills" titles with ScrollFloat component
-- [ ] Edit src/components/Works.jsx: Import ScrollFloat and wrap "My Works" title with ScrollFloat component
-- [ ] Edit src/components/Contact.jsx: Import ScrollFloat and wrap "Leave a comment" title with ScrollFloat component
-- [ ] Test the scroll float effect in the application
-
-## Details
-- Use ScrollFloat props: animationDuration={1}, ease='back.inOut(2)', scrollStart='center bottom+=50%', scrollEnd='bottom bottom-=40%', stagger={0.03}
-- Replace motion.h2 elements with ScrollFloat to maintain h2 semantics
-- Ensure ScrollFloat.css is applied correctly
+- [ ] Edit src/App.jsx to replace the percentage display with an animated SVG airplane
+- [ ] Add Framer Motion animation for the plane to simulate takeoff (move upwards as progress increases)
+- [ ] Test the animation by running the app and verifying the takeoff effect
+- [ ] Ensure the loading screen still functions correctly (2-second duration)

@@ -79,7 +79,7 @@ const PillNav = ({
     window.addEventListener('resize', onResize);
 
     if (document.fonts?.ready) {
-      document.fonts.ready.then(layout).catch(() => {});
+      document.fonts.ready.then(layout).catch(() => { });
     }
 
     const menu = mobileMenuRef.current;
@@ -106,8 +106,7 @@ const PillNav = ({
   const handleEnter = i => {
     const tl = tlRefs.current[i];
     if (!tl) return;
-    // Prevent restarting if already animating to the end
-    if (activeTweenRefs.current[i] && activeTweenRefs.current[i].progress() < 1 && activeTweenRefs.current[i].time() > 0) return;
+
     activeTweenRefs.current[i]?.kill();
     activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
       duration: 0.3,
@@ -119,8 +118,7 @@ const PillNav = ({
   const handleLeave = i => {
     const tl = tlRefs.current[i];
     if (!tl) return;
-    // Prevent restarting if already animating to the start
-    if (activeTweenRefs.current[i] && activeTweenRefs.current[i].progress() > 0 && activeTweenRefs.current[i].time() < tl.duration()) return;
+
     activeTweenRefs.current[i]?.kill();
     activeTweenRefs.current[i] = tl.tweenTo(0, {
       duration: 0.2,

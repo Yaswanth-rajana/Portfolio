@@ -19,8 +19,8 @@ const Hero = memo(() => {
       <div className="hyperspeed-background" style={{ willChange: 'transform' }}>
         <Hyperspeed
           effectOptions={{
-            onSpeedUp: () => {},
-            onSlowDown: () => {},
+            onSpeedUp: () => { },
+            onSlowDown: () => { },
             distortion: "turbulentDistortion",
             length: 400,
             roadWidth: 10,
@@ -124,32 +124,7 @@ const Hero = memo(() => {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className="hero-visual"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            style={{ willChange: 'transform' }}
-          >
-            <div className="visual-container">
-              <div className="tilted-card-container">
-                <TiltedCard
-                  imageSrc="Image.png"
-                  altText="Yaswanth Rajana"
-                  captionText=""
-                  containerHeight="300px"
-                  containerWidth="300px"
-                  imageHeight="300px"
-                  imageWidth="300px"
-                  rotateAmplitude={12}
-                  scaleOnHover={1.2}
-                  showMobileWarning={false}
-                  showTooltip={true}
-                  displayOverlayContent={true}
-                />
-              </div>
-            </div>
-          </motion.div>
+
         </div>
 
         <motion.div
@@ -193,27 +168,28 @@ const Hero = memo(() => {
           </motion.a>
         </motion.div>
 
-        <motion.div
-          className="scroll-indicator"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <div
-            className="scroll-arrow"
-            onClick={() => scrollToSection("about")}
-          >
-            <span>Scroll down</span>
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              style={{ willChange: 'transform' }}
-            >
-              <FaArrowDown />
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
+
+      <motion.div
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+      >
+        <div
+          className="scroll-arrow"
+          onClick={() => scrollToSection("about")}
+        >
+          <span>Scroll down</span>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            style={{ willChange: 'transform' }}
+          >
+            <FaArrowDown />
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   );
 });
