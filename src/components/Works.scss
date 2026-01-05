@@ -54,15 +54,19 @@
 }
 
 .project-card {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
   position: relative;
 
   &:hover {
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.1);
+    border-color: rgba(0, 255, 255, 0.3);
   }
 
   &.featured {
@@ -70,13 +74,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    background: rgba(255, 255, 255, 0.05);
 
     .project-image {
       height: 100%;
     }
 
     .project-content {
-      padding: 2rem;
+      padding: 2.5rem;
     }
   }
 }
@@ -86,16 +91,11 @@
   height: 250px;
   overflow: hidden;
 
-  .image-placeholder {
+  .project-img {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #00ffff, #0099ff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 600;
+    object-fit: cover;
+    transition: transform 0.5s ease;
   }
 
   .project-overlay {
@@ -104,16 +104,19 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 
     .project-links {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
 
       a {
         display: flex;
@@ -121,23 +124,37 @@
         justify-content: center;
         width: 50px;
         height: 50px;
-        background: linear-gradient(135deg, #00ffff, #0099ff);
-        color: #000;
+        background: rgba(0, 0, 0, 0.5);
+        color: #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
         border-radius: 50%;
         text-decoration: none;
         font-size: 1.2rem;
         transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
 
         &:hover {
-          background: #fff;
+          background: #00ffff;
+          color: #000;
           transform: scale(1.1);
+          box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
         }
       }
     }
   }
 
-  &:hover .project-overlay {
-    opacity: 1;
+  &:hover {
+    .project-img {
+      transform: scale(1.1);
+    }
+
+    .project-overlay {
+      opacity: 1;
+
+      .project-links {
+        transform: translateY(0);
+      }
+    }
   }
 }
 
@@ -145,16 +162,16 @@
   padding: 1.5rem;
 
   h3 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.8rem;
-    color: #333333;
+    color: #ffffff;
   }
 
   p {
-    color: #666666;
-    line-height: 1.6;
-    margin-bottom: 1rem;
+    color: #cbd5e1;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
     font-size: 0.95rem;
   }
 }
@@ -162,21 +179,26 @@
 .project-technologies {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .tech-tag {
-  padding: 0.3rem 0.8rem;
-  background: #f0f0f0;
-  color: #333333;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: #00ffff;
+  border: 1px solid rgba(0, 255, 255, 0.1);
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 500;
   transition: all 0.3s ease;
+  letter-spacing: 0.5px;
 
   &:hover {
-    background: linear-gradient(135deg, #00ffff, #0099ff);
-    color: #000;
+    background: rgba(0, 255, 255, 0.1);
+    border-color: rgba(0, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.1);
   }
 }
 

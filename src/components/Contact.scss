@@ -71,7 +71,7 @@
 // .social-links {
 //   display: flex;
 //   gap: 1rem;
-
+// 
 //   a {
 //     display: flex;
 //     align-items: center;
@@ -85,7 +85,7 @@
 //     font-size: 1.2rem;
 //     transition: all 0.3s ease;
 //     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-
+// 
 //     &:hover {
 //       background: #00ff88;
 //       color: #000;
@@ -96,10 +96,12 @@
 // }
 
 .contact-form-container {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .contact-form {
@@ -110,24 +112,25 @@
     input,
     textarea {
       width: 100%;
-      padding: 1rem;
-      border: 2px solid #f0f0f0;
-      border-radius: 10px;
+      padding: 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       font-size: 1rem;
       font-family: inherit;
       transition: all 0.3s ease;
-      background: #fafafa;
+      background: rgba(0, 0, 0, 0.2);
+      color: #fff;
 
       &:focus {
         outline: none;
-        border-color: linear-gradient(135deg, #00ffff, #0099ff);
-        background: #fff;
-        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        border-color: #00ffff;
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
       }
 
       &.error {
         border-color: #ff4757;
-        background: #fff5f5;
+        background: rgba(255, 71, 87, 0.05);
 
         &:focus {
           box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
@@ -135,7 +138,7 @@
       }
 
       &::placeholder {
-        color: #999;
+        color: rgba(255, 255, 255, 0.3);
       }
     }
 
@@ -237,6 +240,7 @@
 
   .contact-form {
     .form-group {
+
       input,
       textarea {
         padding: 0.8rem;
@@ -251,6 +255,6 @@
   }
 }
 
-.section-title{
+.section-title {
   color: #333333;
 }

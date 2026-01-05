@@ -17,6 +17,10 @@
   }
 }
 
+.skills-text {
+  font-size: 1.2rem;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -42,9 +46,10 @@
   margin: 0 auto 4rem;
   text-align: center;
   color: #ffffff;
+  font-size: 1rem;
 
   p {
-    font-size: 1.1rem;
+    font-size: 1.2 rem;
     line-height: 1.8;
     color: #ffffff;
     margin-bottom: 1.5rem;
@@ -58,17 +63,17 @@
 .scrollstack-container {
   height: 440px;
   margin-top: 2rem;
-  
+
   // Custom scrollbar for the container if needed
   &::-webkit-scrollbar {
     width: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -86,7 +91,7 @@
   opacity: 0.2;
   transform: translateY(100%) rotateX(90deg);
   transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-  
+
   &.revealed {
     opacity: 1;
     transform: translateY(0) rotateX(0);
@@ -102,20 +107,20 @@
   .container {
     padding: 0 1rem;
   }
-  
+
   .section-title {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-  
+
   .about-text {
     margin-bottom: 3rem;
-    
+
     p {
       font-size: 1rem;
     }
   }
-  
+
   .scrollstack-container {
     height: 500px;
     margin-top: 1.5rem;
@@ -126,8 +131,44 @@
   .section-title {
     font-size: 1.8rem;
   }
-  
+
   .scrollstack-container {
     height: 400px;
+  }
+}
+
+.skills-content {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  margin-top: 4rem;
+}
+
+.skills-text {
+  flex: 1;
+  text-align: left;
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #e0e0e0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-content {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .skills-text {
+    text-align: center;
+    padding: 0 1rem;
   }
 }

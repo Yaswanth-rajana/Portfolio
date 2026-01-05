@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import './PillNav.css';
+import './PillNav.scss';
 
 const PillNav = ({
   items,

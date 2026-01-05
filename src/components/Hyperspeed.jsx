@@ -2,12 +2,12 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
-import './Hyperspeed.css';
+import "./Hyperspeed.scss";
 
 const Hyperspeed = ({
   effectOptions = {
-    onSpeedUp: () => {},
-    onSlowDown: () => {},
+    onSpeedUp: () => { },
+    onSlowDown: () => { },
     distortion: 'turbulentDistortion',
     length: 400,
     roadWidth: 10,
@@ -40,7 +40,8 @@ const Hyperspeed = ({
       leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
       rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
       sticks: 0x03b3c3
-    }
+    },
+    paused: false
   }
 }) => {
   const hyperspeed = useRef(null);
@@ -109,11 +110,11 @@ const Hyperspeed = ({
           let uAmp = mountainUniforms.uAmp.value;
           let distortion = new THREE.Vector3(
             Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
-              Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
+            Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
             nsin(progress * Math.PI * uFreq.y + time) * uAmp.y -
-              nsin(movementProgressFix * Math.PI * uFreq.y + time) * uAmp.y,
+            nsin(movementProgressFix * Math.PI * uFreq.y + time) * uAmp.y,
             nsin(progress * Math.PI * uFreq.z + time) * uAmp.z -
-              nsin(movementProgressFix * Math.PI * uFreq.z + time) * uAmp.z
+            nsin(movementProgressFix * Math.PI * uFreq.z + time) * uAmp.z
           );
           let lookAtAmp = new THREE.Vector3(2, 2, 2);
           let lookAtOffset = new THREE.Vector3(0, 0, -5);
@@ -141,9 +142,9 @@ const Hyperspeed = ({
           let uAmp = xyUniforms.uAmp.value;
           let distortion = new THREE.Vector3(
             Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
-              Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
+            Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
             Math.sin(progress * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y -
-              Math.sin(movementProgressFix * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y,
+            Math.sin(movementProgressFix * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y,
             0
           );
           let lookAtAmp = new THREE.Vector3(2, 0.4, 1);
@@ -172,9 +173,9 @@ const Hyperspeed = ({
           let uAmp = LongRaceUniforms.uAmp.value;
           let distortion = new THREE.Vector3(
             Math.sin(progress * Math.PI * uFreq.x + time) * uAmp.x -
-              Math.sin(camProgress * Math.PI * uFreq.x + time) * uAmp.x,
+            Math.sin(camProgress * Math.PI * uFreq.x + time) * uAmp.x,
             Math.sin(progress * Math.PI * uFreq.y + time) * uAmp.y -
-              Math.sin(camProgress * Math.PI * uFreq.y + time) * uAmp.y,
+            Math.sin(camProgress * Math.PI * uFreq.y + time) * uAmp.y,
             0
           );
           let lookAtAmp = new THREE.Vector3(1, 1, 0);
@@ -501,8 +502,15 @@ const Hyperspeed = ({
 
         this.container.addEventListener('contextmenu', this.onContextMenu);
 
+        this.container.addEventListener('contextmenu', this.onContextMenu);
+
         this.tick();
       }
+
+      setPaused(paused) {
+        this.options.paused = paused;
+      }
+
 
       onMouseDown(ev) {
         if (this.options.onSpeedUp) this.options.onSpeedUp(ev);
@@ -608,6 +616,10 @@ const Hyperspeed = ({
 
       tick() {
         if (this.disposed || !this) return;
+        if (this.options.paused) {
+          requestAnimationFrame(this.tick);
+          return;
+        }
         if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
           const canvas = this.renderer.domElement;
           this.camera.aspect = canvas.clientWidth / canvas.clientHeight;

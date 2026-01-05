@@ -12,7 +12,7 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-      
+
       // Update active section based on scroll position
       const sections = ['home', 'about', 'works', 'contact']
       const current = sections.find(section => {
@@ -23,7 +23,7 @@ const Header = () => {
         }
         return false
       })
-      
+
       if (current) {
         setActiveSection(current)
       }
@@ -37,6 +37,20 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  useEffect(() => {
+    // Handle initial hash on load
+    if (window.location.hash) {
+      const sectionId = window.location.hash.replace('#', '')
+      const element = document.getElementById(sectionId)
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' })
+          setActiveSection(sectionId)
+        }, 100) // Small delay to ensure render
+      }
+    }
+  }, [])
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
@@ -44,6 +58,8 @@ const Header = () => {
     }
     setIsMenuOpen(false)
     setActiveSection(sectionId)
+    // Update URL without reloading
+    window.history.pushState(null, '', `#${sectionId}`)
   }
 
   const handleNavigation = (href, label) => {

@@ -1,8 +1,8 @@
 // About.jsx
-import { memo } from "react";
+import { memo, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./About.scss";
-import ScrollStack, { ScrollStackItem } from "./ScrollStack";
+import CardSwap, { Card } from "./CardSwap";
 import TextReveal from './TextReveal';
 import ScrollFloat from './ScrollFloat';
 
@@ -26,8 +26,30 @@ const About = memo(() => {
     },
   };
 
+  const [isAboutVisible, setIsAboutVisible] = useState(false);
+  const aboutRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsAboutVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (aboutRef.current) {
+      observer.observe(aboutRef.current);
+    }
+
+    return () => {
+      if (aboutRef.current) {
+        observer.unobserve(aboutRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="about" className="about section">
+    <section id="about" className="about section" ref={aboutRef}>
       <div className="container">
         <motion.div
           className="about-content"
@@ -35,7 +57,6 @@ const About = memo(() => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          style={{ willChange: 'transform' }}
         >
           <ScrollFloat
             animationDuration={1}
@@ -83,22 +104,44 @@ const About = memo(() => {
             Skills
           </ScrollFloat>
 
-          <motion.div variants={itemVariants} className="scrollstack-container" style={{ willChange: 'transform' }}>
-            <ScrollStack useWindowScroll={false}>
-              <ScrollStackItem style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", color: "white" }}>
-                <h3>Frontend Development</h3>
-                <p>Specializing in React, Vue, and modern JavaScript frameworks</p>
-              </ScrollStackItem>
-              <ScrollStackItem style={{ background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", color: "white" }}>
-                <h3>UI/UX Design</h3>
-                <p>Creating intuitive and beautiful user experiences</p>
-              </ScrollStackItem>
-              <ScrollStackItem style={{ background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", color: "white" }}>
-                <h3>Full Stack Solutions</h3>
-                <p>End-to-end development with Node.js and various databases</p>
-              </ScrollStackItem>
-            </ScrollStack>
-          </motion.div>
+          <div className="skills-content">
+            <div className="skills-text">
+              <TextReveal>
+                <p>
+                  My technical expertise spans across the entire web development spectrum. From crafting pixel-perfect user interfaces to architecting robust backend systems, I bring a holistic approach to every project.
+                </p>
+              </TextReveal>
+              <TextReveal>
+                <p>
+                  I constantly explore new technologies and methodologies to deliver scalable, performant, and accessible digital solutions that make a real impact.
+                </p>
+              </TextReveal>
+            </div>
+
+            <div className="scrollstack-container" style={{ flex: 1, height: '600px', position: 'relative' }}>
+              <CardSwap
+                delay={3500}
+                paused={!isAboutVisible}
+              >
+                <Card customClass="skill-card">
+                  <h3>Frontend Development</h3>
+                  <p>Specializing in React, Vue, and modern JavaScript frameworks</p>
+                </Card>
+                <Card customClass="skill-card">
+                  <h3>UI/UX Design</h3>
+                  <p>Creating intuitive and beautiful user experiences</p>
+                </Card>
+                <Card customClass="skill-card">
+                  <h3>Full Stack Solutions</h3>
+                  <p>End-to-end development with Node.js and various databases</p>
+                </Card>
+                <Card customClass="skill-card">
+                  <h3>Machine Learning</h3>
+                  <p>Building intelligent systems using Python and TensorFlow</p>
+                </Card>
+              </CardSwap>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import React, { memo, useCallback, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter, FaDownload, FaArrowDown } from "react-icons/fa";
 import TiltedCard from "./TiltedCard";
@@ -13,10 +13,32 @@ const Hero = memo(() => {
     }
   }, []);
 
+  const [isHeroVisible, setIsHeroVisible] = React.useState(true);
+  const heroRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      if (heroRef.current) {
+        observer.unobserve(heroRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="home" className="hero">
+    <section id="home" className="hero" ref={heroRef}>
       {/* Hyperspeed Background */}
-      <div className="hyperspeed-background" style={{ willChange: 'transform' }}>
+      <div className="hyperspeed-background">
         <Hyperspeed
           effectOptions={{
             onSpeedUp: () => { },
@@ -54,6 +76,7 @@ const Hero = memo(() => {
               rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
               sticks: 0x03b3c3,
             },
+            paused: !isHeroVisible
           }}
         />
       </div>
@@ -107,7 +130,6 @@ const Hero = memo(() => {
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection("contact")}
-                style={{ willChange: 'transform' }}
               >
                 Contact Me
               </motion.button>
@@ -117,7 +139,6 @@ const Hero = memo(() => {
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
                 whileTap={{ scale: 0.95 }}
                 download
-                style={{ willChange: 'transform' }}
               >
                 <FaDownload /> Download Resume
               </motion.a>
@@ -140,7 +161,6 @@ const Hero = memo(() => {
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="GitHub Profile"
-            style={{ willChange: 'transform' }}
           >
             <FaGithub />
           </motion.a>
@@ -151,7 +171,6 @@ const Hero = memo(() => {
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="LinkedIn Profile"
-            style={{ willChange: 'transform' }}
           >
             <FaLinkedin />
           </motion.a>
@@ -162,7 +181,6 @@ const Hero = memo(() => {
             whileHover={{ y: -5, scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Twitter Profile"
-            style={{ willChange: 'transform' }}
           >
             <FaTwitter />
           </motion.a>
@@ -184,7 +202,6 @@ const Hero = memo(() => {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            style={{ willChange: 'transform' }}
           >
             <FaArrowDown />
           </motion.div>

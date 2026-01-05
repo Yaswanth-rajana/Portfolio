@@ -1,10 +1,12 @@
-import { useState, memo, useCallback } from 'react'
+import { useState, memo, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import emailjs from '@emailjs/browser'
 import './Contact.scss'
 import ScrollFloat from './ScrollFloat'
 
 const Contact = memo(() => {
+  const formRef = useRef()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,14 +69,25 @@ const Contact = memo(() => {
     }
 
     setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    // TODO: Replace with your actual EmailJS Header
+    // Service ID: service_id
+    // Template ID: template_id
+    // Public Key: public_key
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
 
       setSubmitStatus('success')
       setFormData({ name: '', email: '', phone: '', message: '' })
     } catch (error) {
+      console.error('EmailJS Error:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -149,7 +162,7 @@ const Contact = memo(() => {
             </motion.div>
 
             <motion.div className="contact-form-container" variants={itemVariants} style={{ willChange: 'transform' }}>
-              <form className="contact-form" onSubmit={handleSubmit}>
+              <form className="contact-form" ref={formRef} onSubmit={handleSubmit}>
                 <div className="form-group">
                   <input
                     type="text"

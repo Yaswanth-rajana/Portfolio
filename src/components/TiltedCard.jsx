@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import './TiltedCard.css';
+import './TiltedCard.scss';
 
 const springValues = {
   damping: 30,

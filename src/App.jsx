@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Header from './components/Header'
 import Hero from './components/Hero'
-import About from './components/About'
-import Works from './components/Works'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
 import './App.scss'
+
+const About = lazy(() => import('./components/About'))
+const Works = lazy(() => import('./components/Works'))
+const Contact = lazy(() => import('./components/Contact'))
+const Footer = lazy(() => import('./components/Footer'))
 // import { ScrollStack } from '@/components/scroll-stack';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
     const timer = setTimeout(() => {
       setLoading(false)
     }, 2000)
-    
+
     // Update progress percentage
     const interval = setInterval(() => {
       setProgress(prev => {
@@ -28,7 +29,7 @@ function App() {
         return prev + 1
       })
     }, 20) // 20ms * 100 = 2000ms (2 seconds)
-    
+
     return () => {
       clearTimeout(timer)
       clearInterval(interval)
@@ -64,11 +65,15 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <About />
-        <Works />
-        <Contact />
+        <Suspense fallback={<div style={{ height: '50vh', background: '#242424' }} />}>
+          <About />
+          <Works />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   )
 }

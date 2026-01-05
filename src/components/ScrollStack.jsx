@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useCallback } from 'react';
 import Lenis from 'lenis';
-import './ScrollStack.css';
+import './ScrollStack.scss';
 
 export const ScrollStackItem = ({ children, itemClassName = '', variant = 'default' }) => {
   const variantClass = variant === 'default' ? '' : `scroll-stack-card--${variant}`;
@@ -93,7 +93,7 @@ const ScrollStack = ({
     const lastCard = cardsRef.current[lastCardIndex];
     const lastCardTop = getElementOffset(lastCard);
     const lastCardTriggerEnd = lastCardTop - scaleEndPositionPx;
-    
+
     // Track if we've reached the last card but don't stop scrolling
     lastCardReachedRef.current = scrollTop >= lastCardTriggerEnd;
 
@@ -317,7 +317,7 @@ const ScrollStack = ({
       <div className="scroll-stack-inner">
         {children}
         {/* Add enough space at the end to allow normal scrolling past the last card */}
-        <div className="scroll-stack-end" style={{  }} />
+        <div className="scroll-stack-end" style={{}} />
       </div>
     </div>
   );
