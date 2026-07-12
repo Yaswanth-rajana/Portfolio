@@ -19,9 +19,15 @@ const Contact = memo(() => {
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target
+    
+    let nextValue = value
+    if (name === 'phone') {
+      nextValue = value.replace(/\D/g, '').slice(0, 10)
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: nextValue
     }))
 
     // Clear error when user starts typing
@@ -48,8 +54,8 @@ const Contact = memo(() => {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Please enter a valid phone number'
-    } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/\s/g, ''))) {
-      newErrors.phone = 'Please enter a valid phone number format'
+    } else if (!/^[1-9]\d{9}$/.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number'
     }
 
     if (!formData.message.trim()) {
@@ -196,6 +202,7 @@ const Contact = memo(() => {
                     placeholder="Phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    maxLength={10}
                     className={errors.phone ? 'error' : ''}
                     aria-describedby={errors.phone ? "phone-error" : undefined}
                   />
