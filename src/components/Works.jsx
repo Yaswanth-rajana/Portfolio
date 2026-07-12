@@ -1,7 +1,6 @@
-import { useState, memo } from 'react'
+import { memo } from 'react'
 import { motion } from 'framer-motion'
-import { FaGithub, FaExternalLinkAlt, FaCode, FaPalette, FaMobile } from 'react-icons/fa'
-import './Works.scss'
+import { FaGithub } from 'react-icons/fa'
 import './Works.scss'
 import ScrollFloat from './ScrollFloat'
 import { projects } from '../data/projects'
@@ -29,9 +28,6 @@ const ProjectCard = memo(({ project, itemVariants }) => {
             <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} GitHub`}>
               <FaGithub />
             </a>
-            <a href={project.live} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} Live Demo`}>
-              <FaExternalLinkAlt />
-            </a>
           </div>
         </div>
       </div>
@@ -53,18 +49,6 @@ const ProjectCard = memo(({ project, itemVariants }) => {
 })
 
 const Works = () => {
-  const [activeFilter, setActiveFilter] = useState('all')
-
-  const filters = [
-    { key: 'all', label: 'All', icon: <FaCode /> },
-    { key: 'web', label: 'Web', icon: <FaCode /> },
-    { key: 'mobile', label: 'Mobile', icon: <FaMobile /> },
-    { key: 'design', label: 'Design', icon: <FaPalette /> }
-  ]
-
-  const filteredProjects = projects.filter(project =>
-    activeFilter === 'all' || project.category === activeFilter
-  )
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -108,21 +92,8 @@ const Works = () => {
             My Works
           </ScrollFloat>
 
-          <motion.div className="filter-tabs" variants={itemVariants}>
-            {filters.map(filter => (
-              <button
-                key={filter.key}
-                className={`filter-tab ${activeFilter === filter.key ? 'active' : ''}`}
-                onClick={() => setActiveFilter(filter.key)}
-              >
-                {filter.icon}
-                {filter.label}
-              </button>
-            ))}
-          </motion.div>
-
           <motion.div className="projects-grid" variants={containerVariants}>
-            {filteredProjects.map(project => (
+            {projects.map(project => (
               <ProjectCard key={project.id} project={project} itemVariants={itemVariants} />
             ))}
           </motion.div>

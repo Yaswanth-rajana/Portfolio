@@ -27,7 +27,7 @@ const TextReveal = ({ children }) => {
 
     const wordElements = el.querySelectorAll('.word');
 
-    gsap.fromTo(
+    const animation = gsap.fromTo(
       wordElements,
       { opacity: 0.2, y: '100%', rotateX: 90, transformOrigin: 'top center' },
       {
@@ -46,7 +46,8 @@ const TextReveal = ({ children }) => {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      animation.scrollTrigger?.kill();
+      animation.kill();
     };
   }, [children]);
 

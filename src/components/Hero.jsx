@@ -134,7 +134,7 @@ const Hero = memo(() => {
                 Contact Me
               </motion.button>
               <motion.a
-                href="/resume.pdf"
+                href="/Yaswanths_Web_Resume.pdf"
                 className="btn btn-secondary"
                 whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
                 whileTap={{ scale: 0.95 }}

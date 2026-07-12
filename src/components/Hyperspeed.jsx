@@ -46,16 +46,27 @@ const Hyperspeed = ({
 }) => {
   const hyperspeed = useRef(null);
   const appRef = useRef(null);
+  const effectOptionsRef = useRef(effectOptions);
 
   useEffect(() => {
+    effectOptionsRef.current = effectOptions;
     if (appRef.current) {
-      appRef.current.dispose();
-      const container = document.getElementById('lights');
-      if (container) {
-        while (container.firstChild) {
-          container.removeChild(container.firstChild);
-        }
+      appRef.current.options = {
+        ...appRef.current.options,
+        ...effectOptions
+      };
+      if (effectOptions.paused !== undefined) {
+        appRef.current.setPaused(effectOptions.paused);
       }
+    }
+  }, [effectOptions]);
+
+  useEffect(() => {
+    const container = hyperspeed.current;
+    if (!container) return;
+
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
     }
     const mountainUniforms = {
       uFreq: { value: new THREE.Vector3(3, 6, 10) },
@@ -1113,21 +1124,25 @@ const Hyperspeed = ({
     }
 
     (function () {
-      const container = document.getElementById('lights');
-      const options = { ...effectOptions };
+      const options = { ...effectOptionsRef.current };
       options.distortion = distortions[options.distortion];
 
       const myApp = new App(container, options);
       appRef.current = myApp;
-      myApp.loadAssets().then(myApp.init);
+      myApp.loadAssets().then(() => {
+        if (!myApp.disposed) {
+          myApp.init();
+        }
+      });
     })();
 
     return () => {
       if (appRef.current) {
         appRef.current.dispose();
+        appRef.current = null;
       }
     };
-  }, [effectOptions]);
+  }, []);
 
   return <div id="lights" ref={hyperspeed}></div>;
 };
